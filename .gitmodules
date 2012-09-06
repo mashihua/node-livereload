@@ -1,3 +1,0 @@
-[submodule "vandor/livereload-js"]
-	path = vandor/livereload-js
-	url = git://github.com/livereload/livereload-js.git
