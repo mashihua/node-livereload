@@ -1,0 +1,6 @@
+-r should
+-r coffee-script
+-R spec
+-u bdd
+-t 10000
+-G
