@@ -14,7 +14,31 @@ Node-LiveReload
 
   'html', 'htm', 'css', 'js', 'png', 'gif', 'jpg','php', 'php5', 'py', 'rb', 'erb'
 
-命令：
+编程例子：
+=======
+
+  livereload = require('livereload');
+  livereload.createServer();
+  livereload.watch({path : __dirname + "/public});
+  
+使用express server:
+
+  livereload = require('livereload');
+  spawn = require('child_process').spawn;
+  express = require('express');  
+  app = express();
+  app.use('/asset', express.static(__dirname + '/public'))
+  livereload = require('livereload');
+  livereload.createServer();
+  event = livereload.watch({
+      exts: ['coffee'],
+      path : __dirname + "/public/src"
+  });
+  event.on('change', function(file){
+    spawn('coffee',['-c', '-o', __dirname + '/public/js' , file]);
+  });
+
+命令行：
 =======
 
 运行`livereload`命令监控当前目录的文件变化并让LiveReload自动刷新你的浏览器。
