@@ -1,12 +1,12 @@
-###
-Implement [LiveReload Protocol](http://help.livereload.com/kb/ecosystem/livereload-protocol) for nodejs user
-###
+# Implement [LiveReload Protocol](http://help.livereload.com/kb/ecosystem/livereload-protocol)
+# for nodejs user
+
 WSServer = require('ws').Server
 http = require 'http'
 path = require 'path'
 url = require 'url'
 fs = require 'fs'
-# Livereload.js dist folder
+# Livereload.js  folder
 livereloadPath = "#{__dirname}/../lib/livereload/"
 
 # This server handler client connect and send reload command to client

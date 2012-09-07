@@ -1,14 +1,14 @@
-###
-Watch file or directory
-Example:
-watch = require('watch').watch
-watch __filename
-watch __dirname, (err, file) -> console.log file
-watch __dirname, {exts: ['coffee']}, (err, file) -> 
-  {spawn} = require 'child_process'; 
-  coffee = spawn 'coffee', ['-c', '-o', 'lib', 'src']
-  (item.on 'data',(data) -> console.log data) for item in [coffee.stdout,coffee.stderr]
-###
+# Watch file or directory, Example:
+# 	watch = require('watch').watch
+# 	watch __filename
+# 	watch __dirname, (event) -> event.on 'change', (file) -> console.log file
+# 	event = watch __dirname, {exts: ['coffee']}
+# 	event.on 'delete', (file) ->
+# 	  console.log "Delete #{file}"
+# 	event.on 'change', (file) ->
+# 	  {spawn} = require 'child_process'
+# 	  coffee = spawn 'coffee', ['-c', '-o', 'lib', file]
+# 	  (item.on 'data',(data) -> console.log data) for item in [coffee.stdout,coffee.stderr]
 
 fs        = require 'fs'
 util      = require 'util'
@@ -53,8 +53,15 @@ exports.watch = (dir_name, options, callback) ->
       em.emit 'error', err
     else 
       em.emit event, file
-  
+  # For compatible purpose:
+  # Node.js 0.8 start move path.exists to fs.exists.
+  # See[change log](https://github.com/joyent/node/wiki/API-changes-between-v0.6-and-v0.8).
+  existsFuc = if fs.existsSync then fs.existsSync else path.existsSync
+  if not existsFuc #{dir_name}
+    console.log "#{dir_name} is not exists"
+    return
   watch dir_name, options, monitor
+  console.log "Start watch #{dir_name}"
   callback em
   em
   

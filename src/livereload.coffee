@@ -1,6 +1,7 @@
 liveServer = require './server'
 watch = require './watch'
 program = require 'commander'
+path = require 'path'
 
 # LiveReload Server instance,  [Api Documentation](http://mashihua.github.com/node-livereload/docs/server.html)
 server = null
@@ -12,27 +13,33 @@ exports.wacth = watch
 # Create LiveReload Server
 exports.createServer = (options) ->
   return server if server 
+  
   opts = 
     apiVersion : '1.6'
     host : '0.0.0.0'
     port : '35729'
-  for key,value of options
-    opts[key] = value
+  for key,value of opts
+      opts[key] = options[value] if options[key]
+  if not options.path
+    options.path = process.cwd()
+  else
+    options.path = path.resolve process.cwd(), options.path
+  
   server = new liveServer opts
-  options.path = process.cwd() if not options.path
   
   watch.watch options.path, options, (event) ->
     event.on 'error', (error) ->
       console.log error
     event.on 'change', (file) ->
       sever.reloadBrowser [file] if server
+  
   server  
 
 # Stop the LiveReload Server  
 exports.stop = ->
   server.stop() if server
 
-# process command-line arguments
+# Process command-line arguments
 exports.cli = (argv)->
   
   list = (val) ->
