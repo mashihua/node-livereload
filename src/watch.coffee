@@ -1,14 +1,18 @@
 # Watch file or directory, Example:
-# 	watch = require('watch').watch
-# 	watch __filename
-# 	watch __dirname, (event) -> event.on 'change', (file) -> console.log file
-# 	event = watch __dirname, {exts: ['coffee']}
-# 	event.on 'delete', (file) ->
-# 	  console.log "Delete #{file}"
-# 	event.on 'change', (file) ->
-# 	  {spawn} = require 'child_process'
-# 	  coffee = spawn 'coffee', ['-c', '-o', 'lib', file]
-# 	  (item.on 'data',(data) -> console.log data) for item in [coffee.stdout,coffee.stderr]
+# <pre>
+# watch = require('watch').watch
+# watch __filename
+# watch __dirname, (event) ->
+#   event.on 'change', (file) -> console.log file
+# event = watch __dirname, {exts: ['coffee']}
+# event.on 'delete', (file) ->
+#   console.log "Delete #{file}"
+# event.on 'change', (file) ->
+#   {spawn} = require 'child_process'
+#   coffee = spawn 'coffee', ['-c', '-o', 'lib', file]
+#   for item in [coffee.stdout,coffee.stderr]
+#     item.on 'data',(data) -> console.log data 
+#</pre>
 
 fs        = require 'fs'
 util      = require 'util'
@@ -23,13 +27,13 @@ exports.extentions = [
 ]
 # ## API
 # Watch directory or file, the `callback` argument is a function with `EventEmitter` instance.
-# ---
 # The `options` have following property
+# ---
 # * `exts` , File extentions, Defalut is `exports.extentions`
 # * `ignore` , Ignore function which exclusions this file or directory
 # * `callback` , Callback function gets one arguments `(file)`
-# ---
 # The `EventEmitter` have following event
+# ---
 # * `error` , If `fs` api emits an 'error' event - it will forwarded here
 # * `create`, If file or directory was created
 # * `change`, If file or directory was changed

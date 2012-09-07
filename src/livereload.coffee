@@ -3,37 +3,37 @@ watch = require './watch'
 program = require 'commander'
 path = require 'path'
 
-# LiveReload Server instance,  [Api Documentation](http://mashihua.github.com/node-livereload/docs/server.html)
-server = null
+# LiveReload Server instance,  [Api Documentation](server.html)
+exports.liveServer = server =  null
 
-# Exports the watch api,  [Api Documentation](http://mashihua.github.com/node-livereload/docs/watch.html)
-exports.wacth = watch
+# Exports the watch api,  [Api Documentation](watch.html)
+exports.wacthServer = watch
 
 
 # Create LiveReload Server
-exports.createServer = (options) ->
+exports.createServer = (options = {}) ->
   return server if server 
-  
   opts = 
     apiVersion : '1.6'
     host : '0.0.0.0'
     port : '35729'
   for key,value of opts
       opts[key] = options[value] if options[key]
+  
+  server = new liveServer opts
+
+# Watch directory or file, the `callback` argument is a function with `EventEmitter` instance.
+# See [Watch Api Documentation](watch.html)
+exports.watch = (options = {}, callback = ->) ->
   if not options.path
     options.path = process.cwd()
   else
     options.path = path.resolve process.cwd(), options.path
-  
-  server = new liveServer opts
-  
   watch.watch options.path, options, (event) ->
     event.on 'error', (error) ->
-      console.log error
+      callback error
     event.on 'change', (file) ->
-      sever.reloadBrowser [file] if server
-  
-  server  
+      callback file
 
 # Stop the LiveReload Server  
 exports.stop = ->
@@ -54,5 +54,7 @@ exports.cli = (argv)->
     program.exts = watch.extentions
   else    
     program.exts = program.exts.concat watch.extentions
-
-  exports.createServer program
+    
+  exports.createServer()
+  exports.watch program, (file) ->
+    sever.reloadBrowser [file] if server

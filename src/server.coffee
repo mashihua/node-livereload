@@ -46,7 +46,7 @@ Server::start = ->
     query = url.parse request.url, true
     # For compatible purpose:
     # Node.js 0.8 start move path.exists to fs.exists.
-    # See[change log](https://github.com/joyent/node/wiki/API-changes-between-v0.6-and-v0.8).
+    # See [change log](https://github.com/joyent/node/wiki/API-changes-between-v0.6-and-v0.8).
     existsFuc = if fs.existsSync then fs.existsSync else path.existsSync
     file = "#{livereloadPath}#{query.pathname}"
     exists = existsFuc file

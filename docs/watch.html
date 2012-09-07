@@ -1,14 +1,19 @@
-<!DOCTYPE html>  <html> <head>   <title>watch.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="livereload.html">                 livereload.coffee               </a>                                           <a class="source" href="server.html">                 server.coffee               </a>                                           <a class="source" href="watch.html">                 watch.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               watch.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Watch file or directory, Example:
-    watch = require('watch').watch
-    watch <em>_filename
-    watch _</em>dirname, (event) -> event.on 'change', (file) -> console.log file
-    event = watch <em>_dirname, {exts: ['coffee']}
-    event.on 'delete', (file) ->
-      console.log "Delete #{file}"
-    event.on 'change', (file) ->
-      {spawn} = require 'child</em>process'
-      coffee = spawn 'coffee', ['-c', '-o', 'lib', file]
-      (item.on 'data',(data) -> console.log data) for item in [coffee.stdout,coffee.stderr]</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">fs        = </span><span class="nx">require</span> <span class="s">&#39;fs&#39;</span>
+<!DOCTYPE html>  <html> <head>   <title>watch.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="livereload.html">                 livereload.coffee               </a>                                           <a class="source" href="server.html">                 server.coffee               </a>                                           <a class="source" href="watch.html">                 watch.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               watch.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Watch file or directory, Example:</p>
+
+<pre>
+watch = require('watch').watch
+watch __filename
+watch __dirname, (event) ->
+  event.on 'change', (file) -> console.log file
+event = watch __dirname, {exts: ['coffee']}
+event.on 'delete', (file) ->
+  console.log "Delete #{file}"
+event.on 'change', (file) ->
+  {spawn} = require 'child_process'
+  coffee = spawn 'coffee', ['-c', '-o', 'lib', file]
+  for item in [coffee.stdout,coffee.stderr]
+    item.on 'data',(data) -> console.log data 
+</pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">fs        = </span><span class="nx">require</span> <span class="s">&#39;fs&#39;</span>
 <span class="nv">util      = </span><span class="nx">require</span> <span class="s">&#39;util&#39;</span>
 <span class="nv">path      = </span><span class="nx">require</span> <span class="s">&#39;path&#39;</span>
 <span class="nv">events    = </span><span class="nx">require</span> <span class="s">&#39;events&#39;</span>
@@ -17,19 +22,24 @@
   <span class="s">&#39;php&#39;</span><span class="p">,</span> <span class="s">&#39;php5&#39;</span><span class="p">,</span> <span class="s">&#39;py&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">,</span> <span class="s">&#39;erb&#39;</span>
 <span class="p">]</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h2>API</h2>
 
-<h2>Watch directory or file, the <code>callback</code> argument is a function with <code>EventEmitter</code> instance.</h2>
+<p>Watch directory or file, the <code>callback</code> argument is a function with <code>EventEmitter</code> instance.</p>
 
-<p>The <code>options</code> have following property
-* <code>exts</code> , File extentions, Defalut is <code>exports.extentions</code>
-* <code>ignore</code> , Ignore function which exclusions this file or directory</p>
+<h2>The <code>options</code> have following property</h2>
 
-<h2>* <code>callback</code> , Callback function gets one arguments <code>(file)</code></h2>
+<ul>
+<li><code>exts</code> , File extentions, Defalut is <code>exports.extentions</code></li>
+<li><code>ignore</code> , Ignore function which exclusions this file or directory</li>
+<li><code>callback</code> , Callback function gets one arguments <code>(file)</code></li>
+</ul>
 
-<p>The <code>EventEmitter</code> have following event
-* <code>error</code> , If <code>fs</code> api emits an 'error' event - it will forwarded here
-* <code>create</code>, If file or directory was created
-* <code>change</code>, If file or directory was changed
-* <code>delete</code>, If file or directory was delete</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">exports.watch = </span><span class="nf">(dir_name, options, callback) -&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Who is not given callback</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">if</span> <span class="o">not</span> <span class="nx">callback</span>
+<h2>The <code>EventEmitter</code> have following event</h2>
+
+<ul>
+<li><code>error</code> , If <code>fs</code> api emits an 'error' event - it will forwarded here</li>
+<li><code>create</code>, If file or directory was created</li>
+<li><code>change</code>, If file or directory was changed</li>
+<li><code>delete</code>, If file or directory was delete</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">exports.watch = </span><span class="nf">(dir_name, options, callback) -&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Who is not given callback</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">if</span> <span class="o">not</span> <span class="nx">callback</span>
     <span class="nx">callback</span> <span class="o">?=</span> <span class="nx">options</span> <span class="o">?</span> <span class="nf">()-&gt;</span>
     <span class="nv">options = </span> <span class="p">{}</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>File extention</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">options</span><span class="p">.</span><span class="nx">exts</span> <span class="o">?=</span>  <span class="nx">exports</span><span class="p">.</span><span class="nx">extentions</span> </pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Ignore method</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">if</span> <span class="o">not</span> <span class="nx">options</span><span class="p">.</span><span class="nx">ignore</span>
     <span class="nv">options.ignore = </span><span class="nf">(file) -&gt;</span>
