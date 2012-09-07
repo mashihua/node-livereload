@@ -4,7 +4,7 @@
   "description": "LiveReload watch server",
   "keywords" : "livereload watch" ,
   "homepage" : "http://mashihua.github.com/node-livereload/",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/mashihua/node-livereload.git"
@@ -14,7 +14,7 @@
     "url": "https://mashihua.mit-license.org"
   }],
   "bin": {
-    "livereload": "./bin/livareload"
+    "livereload": "./bin/livereload"
   },
   "main" : "lib/livereload",
   "scripts": {
