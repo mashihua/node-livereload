@@ -8,35 +8,35 @@ Node-LiveReload
 安装：
 =======
 
-  npm install -g node-livereload
+    npm install -g node-livereload
   
 你的浏览器需要安装[LiveReload的扩展](http://help.livereload.com/kb/general-use/browser-extensions)。默认情况下监控当前目录下的下列扩展名的文件：
 
-  'html', 'htm', 'css', 'js', 'png', 'gif', 'jpg','php', 'php5', 'py', 'rb', 'erb'
+    'html', 'htm', 'css', 'js', 'png', 'gif', 'jpg','php', 'php5', 'py', 'rb', 'erb'
 
 编程例子：
 =======
 
-  livereload = require('livereload');
-  livereload.createServer();
-  livereload.watch({path : __dirname + "/public});
+    livereload = require('livereload');
+    livereload.createServer();
+    livereload.watch({path : __dirname + "/public});
   
 使用express server:
 
-  livereload = require('livereload');
-  spawn = require('child_process').spawn;
-  express = require('express');  
-  app = express();
-  app.use('/asset', express.static(__dirname + '/public'))
-  livereload = require('livereload');
-  livereload.createServer();
-  event = livereload.watch({
+    livereload = require('livereload');
+    spawn = require('child_process').spawn;
+    express = require('express');  
+    app = express();
+    app.use('/asset', express.static(__dirname + '/public'));
+    livereload = require('livereload');
+    livereload.createServer();
+    event = livereload.watch({
       exts: ['coffee'],
       path : __dirname + "/public/src"
-  });
-  event.on('change', function(file){
-    spawn('coffee',['-c', '-o', __dirname + '/public/js' , file]);
-  });
+    });
+    event.on('change', function(file){
+      spawn('coffee',['-c', '-o', __dirname + '/public/js' , file]);
+    });
 
 命令行：
 =======
@@ -45,11 +45,11 @@ Node-LiveReload
 
 你可以使用下面命令改变监控目录：
   
-  livereload -p /workspace
+    livereload -p /workspace
 
 你也可以添加监控文件的扩展名：
 
-  livereload -e txt,less
+    livereload -e txt,less
 
 文档
 =======
@@ -62,4 +62,4 @@ Node-LiveReload
 单元测试：
 ========
 
-  npm test
+    npm test
