@@ -55,7 +55,7 @@ Node-LiveReload
 =======
 
 
-* [livereload.coffee](http://mashihua.github.com/node-livereload/docs/liveload.html)
+* [livereload.coffee](http://mashihua.github.com/node-livereload/docs/livereload.html)
 * [server.coffee](http://mashihua.github.com/node-livereload/docs/server.html)
 * [watch.coffee](http://mashihua.github.com/node-livereload/docs/watch.html)
 
