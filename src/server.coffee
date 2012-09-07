@@ -27,6 +27,7 @@ Server::reloadBrowser = (paths = []) ->
       command : 'reload'
       path : path
       liveCSS : true
+      liveImg : true
     for conn in @conns
       conn.send JSON.stringify data
 
