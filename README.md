@@ -62,4 +62,5 @@ Node-LiveReload
 单元测试：
 ========
 
+    打开安装livereload插件的浏览器
     npm test
