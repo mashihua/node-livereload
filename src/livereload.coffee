@@ -25,10 +25,6 @@ exports.createServer = (options = {}) ->
 # Watch directory or file, the `callback` argument is a function with `EventEmitter` instance.
 # See [Watch Api Documentation](watch.html)
 exports.watch = (options = {}, callback = ->) ->
-  if not options.path
-    options.path = process.cwd()
-  else
-    options.path = path.resolve process.cwd(), options.path
   watch.watch options.path, options, (event) ->
     event.on 'error', (error) ->
       callback error
@@ -40,21 +36,34 @@ exports.stop = ->
   server.stop() if server
 
 # Process command-line arguments
-exports.cli = (argv)->
-  
+exports.cli = (argv)->  
   list = (val) ->
-    val.split ','
-   
+    val.split ','   
   program
     .version('0.1.0')
     .option('-p, --path [path]', 'Watch path. Default is current directory', String)
     .option('-e, --exts [items]', 'File extentions list split by comma', list)
+    .option('-i, --ignore [items], Ignore expression list split by comma ', list)
     .parse argv
+  
   if not program.exts
     program.exts = watch.extentions
   else    
     program.exts = program.exts.concat watch.extentions
     
+  if not options.path
+    options.path = process.cwd()
+  else
+    options.path = path.resolve process.cwd(), options.path
+      
+  if progarm.ignore
+    ignores = progarm.ignore
+    progarm.ignore = (file)->
+      for key, val in ignores
+        if new RegExp(val).test file
+          return true
+      false
+           
   exports.createServer()
   exports.watch program, (file) ->
-    sever.reloadBrowser [file] if server
+    server.reloadBrowser [file] if server

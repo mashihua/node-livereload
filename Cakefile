@@ -4,6 +4,7 @@ path          = require 'path'
 {spawn, exec} = require 'child_process'
 
 shell = (cmd, args, cb)->
+  process.env.PATH = "./node_modules/.bin:#{process.env.PATH}"
   proc = spawn cmd, args, 
           cwd : process.cwd()
           env : process.env
