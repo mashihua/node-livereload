@@ -51,10 +51,10 @@ exports.cli = (argv)->
   else    
     program.exts = program.exts.concat watch.extentions
     
-  if not options.path
-    options.path = process.cwd()
+  if not program.path
+    program.path = process.cwd()
   else
-    options.path = path.resolve process.cwd(), options.path
+    program.path = path.resolve process.cwd(), program.path
       
   if progarm.ignore
     ignores = progarm.ignore
